@@ -1,7 +1,23 @@
 class Scrabble
 
   def score(word)
-    1
+    return 0 if word.nil?
+
+    ones = [1] * word.length
+    score_with_multipliers(word, ones)
+  end
+
+  def score_with_multipliers(word, letter_multipliers, word_multiplier = 1)
+    total = 0
+    return total if word.nil?
+
+    word.each_char do |char|
+      letter_multiplier = letter_multipliers[word.index(char)]
+      total += point_values[char.upcase] * letter_multiplier
+    end
+
+    total += 10 if word.length >= 7
+    total * word_multiplier
   end
 
   def point_values
